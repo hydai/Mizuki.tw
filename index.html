@@ -1,14 +1,161 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
   <meta charset="utf-8">
-  <title>Mizuki — Redirecting...</title>
-  <link rel="canonical" href="https://lit.link/en/MizukiVtuberTW">
-  <meta name="robots" content="noindex">
-  <meta http-equiv="refresh" content="0;url=https://lit.link/en/MizukiVtuberTW">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mizuki.tw</title>
+  <meta name="description" content="VTuber Mizuki 的官方網域 — 快速前往各個連結。">
+  <link rel="canonical" href="https://mizuki.tw/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mizuki.tw/">
+  <meta property="og:title" content="Mizuki.tw">
+  <meta property="og:description" content="VTuber Mizuki 的官方網域 — 快速前往各個連結。">
+  <meta name="twitter:card" content="summary">
+  <meta name="theme-color" content="#ffd9e6">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23ff6f96'/><stop offset='1' stop-color='%233f9bd6'/></linearGradient></defs><rect width='32' height='32' rx='8' fill='url(%23g)'/><text x='16' y='23' font-size='20' font-weight='700' fill='%23fff' text-anchor='middle' font-family='sans-serif'>M</text></svg>">
+  <style>
+    :root{
+      --ink:#41415a;
+      --muted:#6b6b84;
+      --pink:#ff8fb1;
+      --pink-deep:#ff5f8f;
+      --blue:#79c0ee;
+      --blue-deep:#3f9bd6;
+      --glass:rgba(255,255,255,.55);
+      --glass-edge:rgba(255,255,255,.75);
+      --radius:26px;
+      --font:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
+      --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:var(--font);
+      color:var(--ink);
+      min-height:100vh;
+      min-height:100svh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      position:relative;
+      overflow:hidden;
+      background:
+        radial-gradient(900px 600px at 12% 16%,#ffd6e6 0%,rgba(255,214,230,0) 60%),
+        radial-gradient(900px 700px at 88% 84%,#cfeaff 0%,rgba(207,234,255,0) 60%),
+        radial-gradient(700px 600px at 80% 10%,#f0e1fb 0%,rgba(240,225,251,0) 55%),
+        linear-gradient(135deg,#fff1f6 0%,#eef4ff 100%);
+    }
+    /* Ambient drifting glows */
+    .bg{position:fixed;inset:0;overflow:hidden;z-index:0;pointer-events:none}
+    .blob{position:absolute;border-radius:50%;filter:blur(64px);opacity:.5}
+    .blob--pink{width:46vmax;height:46vmax;background:#ffb3cd;top:-15vmax;left:-12vmax;animation:drift1 26s ease-in-out infinite}
+    .blob--blue{width:42vmax;height:42vmax;background:#a8d8f5;bottom:-15vmax;right:-12vmax;animation:drift2 31s ease-in-out infinite}
+    @keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(4vmax,3vmax) scale(1.06)}}
+    @keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-4vmax,-3vmax) scale(1.08)}}
+
+    .card{
+      position:relative;z-index:1;
+      width:min(100%,420px);
+      padding:clamp(28px,5.5vw,42px);
+      text-align:center;
+      background:var(--glass);
+      -webkit-backdrop-filter:blur(22px) saturate(165%);
+      backdrop-filter:blur(22px) saturate(165%);
+      border:1px solid var(--glass-edge);
+      border-radius:var(--radius);
+      box-shadow:
+        0 22px 50px -14px rgba(120,110,160,.32),
+        0 6px 16px -8px rgba(120,110,160,.20),
+        inset 0 1px 0 rgba(255,255,255,.65);
+      animation:rise .7s cubic-bezier(.2,.8,.2,1) both;
+    }
+    .title{
+      font-size:clamp(36px,9vw,54px);
+      font-weight:800;
+      letter-spacing:-.02em;
+      line-height:1;
+      margin-bottom:clamp(24px,5vw,34px);
+      background:linear-gradient(100deg,var(--pink-deep),var(--blue-deep));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      -webkit-text-fill-color:transparent;
+      animation:rise .7s .06s cubic-bezier(.2,.8,.2,1) both;
+    }
+    .links{display:flex;flex-direction:column;gap:12px}
+    .link{
+      display:flex;align-items:center;gap:12px;
+      padding:14px 16px;
+      text-decoration:none;
+      color:var(--ink);
+      background:rgba(255,255,255,.5);
+      border:1px solid rgba(255,255,255,.6);
+      border-radius:16px;
+      transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s,background .25s,border-color .25s;
+      animation:rise .6s cubic-bezier(.2,.8,.2,1) backwards;
+    }
+    .link:nth-of-type(1){animation-delay:.16s}
+    .link:nth-of-type(2){animation-delay:.26s}
+    .link:hover{
+      transform:translateY(-2px);
+      background:rgba(255,255,255,.82);
+      border-color:rgba(255,255,255,.9);
+      box-shadow:0 14px 26px -12px rgba(120,110,160,.45);
+    }
+    .link:focus-visible{outline:2px solid var(--blue-deep);outline-offset:3px}
+    .path{
+      font-family:var(--mono);
+      font-size:14px;font-weight:700;
+      padding:3px 9px;border-radius:9px;
+      flex:0 0 auto;
+    }
+    .link--pink .path{color:var(--pink-deep);background:rgba(255,143,177,.16)}
+    .link--blue .path{color:var(--blue-deep);background:rgba(121,192,238,.18)}
+    .label{font-size:15px;font-weight:600;letter-spacing:.01em;white-space:nowrap}
+    .dest{margin-left:auto;font-size:12.5px;color:var(--muted);white-space:nowrap}
+    .arrow{
+      flex:0 0 auto;width:16px;height:16px;color:var(--muted);
+      transition:transform .25s cubic-bezier(.2,.8,.2,1),color .25s;
+    }
+    .link:hover .arrow{transform:translate(3px,-3px)}
+    .link--pink:hover .arrow{color:var(--pink-deep)}
+    .link--blue:hover .arrow{color:var(--blue-deep)}
+
+    @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+    @media (max-width:340px){.dest{display:none}}
+    @media (prefers-reduced-motion:reduce){
+      .blob{animation:none}
+      .card,.title,.link{animation:none}
+      .link,.arrow{transition:color .2s}
+      .link:hover{transform:none}
+      .link:hover .arrow{transform:none}
+    }
+  </style>
 </head>
 <body>
-  <script>window.location.replace("https://lit.link/en/MizukiVtuberTW")</script>
-  <noscript><a href="https://lit.link/en/MizukiVtuberTW">Click here to visit Mizuki's link hub</a></noscript>
+  <div class="bg" aria-hidden="true">
+    <div class="blob blob--pink"></div>
+    <div class="blob blob--blue"></div>
+  </div>
+
+  <main class="card">
+    <h1 class="title">Mizuki.tw</h1>
+    <nav class="links" aria-label="Mizuki 連結">
+      <a class="link link--pink" href="https://lit.link/en/MizukiVtuberTW" aria-label="連結總覽,前往 lit.link">
+        <span class="path">/who</span>
+        <span class="label">連結總覽</span>
+        <span class="dest">lit.link</span>
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>
+      </a>
+      <a class="link link--blue" href="https://prism.oshi.tw/mizuki" aria-label="Prism 頁面,前往 prism.oshi.tw">
+        <span class="path">/prism</span>
+        <span class="label">Prism 頁面</span>
+        <span class="dest">prism.oshi.tw</span>
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>
+      </a>
+    </nav>
+  </main>
 </body>
 </html>
